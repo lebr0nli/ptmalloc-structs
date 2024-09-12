@@ -1,5 +1,5 @@
 # Compiler
-CC = gcc
+CC = zig cc
 
 # Source file
 SRC = ptmalloc-structs.c
@@ -15,11 +15,19 @@ GLIBC_MIN_VERSION = 212
 GLIBC_MAX_VERSION = 239
 
 # Define target names for each architecture
-TARGETS = i386 x86_64
+TARGETS = i386 x86_64 arm aarch64 mips mips64 riscv32 riscv64 ppc ppc64
 
-# Determine the architecture-specific flags
-ARCH_FLAGS_i386 = -m32
-ARCH_FLAGS_x86_64 =
+# Architecture-specific flags
+ARCH_FLAGS_i386 = -target x86-linux-gnu
+ARCH_FLAGS_x86_64 = -target x86_64-linux-gnu
+ARCH_FLAGS_arm = -target arm-linux-gnueabihf
+ARCH_FLAGS_aarch64 = -target aarch64-linux-gnu
+ARCH_FLAGS_mips = -target mipsel-linux-gnu
+ARCH_FLAGS_mips64 = -target mips64el-linux-gnu
+ARCH_FLAGS_riscv32 = -target riscv32-linux-gnu
+ARCH_FLAGS_riscv64 = -target riscv64-linux-gnu
+ARCH_FLAGS_ppc = -target powerpc-linux-gnu
+ARCH_FLAGS_ppc64 = -target powerpc64-linux-gnu
 
 # Default target
 all: $(TARGETS)
@@ -41,3 +49,4 @@ clean:
 	rm -rf $(OUT_DIR)
 
 .PHONY: all clean $(TARGETS)
+
